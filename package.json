@@ -1,0 +1,31 @@
+{
+  "name": "simplechat",
+  "version": "1.0.0",
+  "description": "Simple chat app using React and Socket.io",
+  "main": "index.js",
+  "scripts": {
+    "prestart": "webpack",
+    "start": "node server/server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/carsugar/SimpleChat.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/carsugar/SimpleChat/issues"
+  },
+  "homepage": "https://github.com/carsugar/SimpleChat#readme",
+  "dependencies": {
+    "babel-cli": "^6.18.0",
+    "babel-loader": "^6.2.6",
+    "babel-preset-es2015": "^6.18.0",
+    "babel-preset-react": "^6.16.0",
+    "express": "^4.14.0",
+    "react": "^15.3.2",
+    "react-dom": "^15.3.2",
+    "socket.io": "^1.5.1",
+    "webpack": "^1.13.3"
+  }
+}
