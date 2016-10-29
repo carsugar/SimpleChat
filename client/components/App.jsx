@@ -1,4 +1,5 @@
 import React from 'react';
+import moment from 'moment';
 const socket = io();
 
 class App extends React.Component {
@@ -6,7 +7,8 @@ class App extends React.Component {
     super(props);
 
     this.state = {
-      message: '',
+      username: 'carling',
+      message: { text: '' },
       messageList: []
     };
 
@@ -21,22 +23,36 @@ class App extends React.Component {
 		});
   }
 
+  componentDidUpdate() {
+    var messageDiv = document.getElementById("messages");
+    messageDiv.scrollTop = messageDiv.scrollHeight;
+  }
+
   onMessageInput(event) {
-    this.setState({ message: event.target.value });
+    this.setState({ message: {
+      user: this.state.username,
+      text: event.target.value,
+      time: new Date()
+    } });
   }
 
   sendMessage(event) {
     event.preventDefault();
-    if (this.state.message.length) {
+    if (this.state.message.text.length) {
       socket.emit('message', this.state.message);
-      this.setState({ message: '' });
+      this.setState({ message: { text: '' } });
     }
   }
 
   renderMessageList() {
     return this.state.messageList.map((message, idx) => {
+      console.log(message)
 			return (
-				<li key={idx}>{message}</li>
+				<li key={idx}>
+          <div className="message-user">{message.user}</div>
+          <div className="message-time">{moment(message.time).format('LT')}</div>
+          <div className="message-text">{message.text}</div>
+				</li>
 			);
 		});
   }
@@ -44,13 +60,16 @@ class App extends React.Component {
   render() {
     return (
       <div>
+        <div id="header">
+          <h1 id="header-simple">Simple</h1><h1 id="header-chat">Chat</h1>
+        </div>
         <ul id="messages">
           {this.renderMessageList()}
         </ul>
         <form onSubmit={this.sendMessage}>
-          <input id="m"
-                 autoComplete="off"
-                 value={this.state.message}
+          <input autoComplete="off"
+                 placeholder="Type a message..."
+                 value={this.state.message.text}
                  onChange={this.onMessageInput} />
           <button>Send</button>
         </form>
