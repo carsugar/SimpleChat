@@ -7,11 +7,14 @@ class App extends React.Component {
     super(props);
 
     this.state = {
-      username: 'carling',
+      userEstablished: false,
+      username: '',
       message: { text: '' },
       messageList: []
     };
 
+    this.onUsernameInput = this.onUsernameInput.bind(this);
+    this.enterChatroom = this.enterChatroom.bind(this);
     this.onMessageInput = this.onMessageInput.bind(this);
     this.sendMessage = this.sendMessage.bind(this);
     this.renderMessageList = this.renderMessageList.bind(this);
@@ -26,6 +29,15 @@ class App extends React.Component {
   componentDidUpdate() {
     var messageDiv = document.getElementById("messages");
     messageDiv.scrollTop = messageDiv.scrollHeight;
+  }
+
+  onUsernameInput(event) {
+    this.setState({ username: event.target.value });
+  }
+
+  enterChatroom(event) {
+    event.preventDefault();
+    this.setState({ userEstablished: true });
   }
 
   onMessageInput(event) {
@@ -46,18 +58,49 @@ class App extends React.Component {
 
   renderMessageList() {
     return this.state.messageList.map((message, idx) => {
-      console.log(message)
+      if (message.user === this.state.username) {
+        return (
+  				<li key={idx}>
+            <div className="message-bubble my-message">
+              <div className="message-user">{message.user}</div>
+              <div className="message-time">{moment(message.time).format('LT')}</div>
+              <div className="message-text">{message.text}</div>
+            </div>
+  				</li>
+  			);
+      }
 			return (
 				<li key={idx}>
-          <div className="message-user">{message.user}</div>
-          <div className="message-time">{moment(message.time).format('LT')}</div>
-          <div className="message-text">{message.text}</div>
+          <div className="message-bubble">
+            <div className="message-user">{message.user}</div>
+            <div className="message-time">{moment(message.time).format('LT')}</div>
+            <div className="message-text">{message.text}</div>
+          </div>
 				</li>
 			);
 		});
   }
 
   render() {
+    if (!this.state.userEstablished) {
+      return (
+        <div>
+          <div id="header">
+            <h1 id="header-simple">Simple</h1><h1 id="header-chat">Chat</h1>
+          </div>
+          <ul id="messages">
+          </ul>
+          <form onSubmit={this.enterChatroom}>
+            <input autoComplete="off"
+                   placeholder="Choose a username"
+                   value={this.state.username}
+                   onChange={this.onUsernameInput} />
+            <button className="button">Go Chat</button>
+          </form>
+        </div>
+      );
+    }
+
     return (
       <div>
         <div id="header">
@@ -68,10 +111,10 @@ class App extends React.Component {
         </ul>
         <form onSubmit={this.sendMessage}>
           <input autoComplete="off"
-                 placeholder="Type a message..."
-                 value={this.state.message.text}
-                 onChange={this.onMessageInput} />
-          <button>Send</button>
+            placeholder="Type a message..."
+            value={this.state.message.text}
+            onChange={this.onMessageInput} />
+          <button className="button">Send</button>
         </form>
       </div>
     );

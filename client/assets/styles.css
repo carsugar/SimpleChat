@@ -36,7 +36,7 @@ form input {
     margin-right: 1%;
     font-size: 1em;
 }
-form button {
+.button {
     width: 9%;
     height: 90%;
     background: #9068be;
@@ -47,10 +47,10 @@ form button {
     padding: 10px;
     cursor: pointer;
 }
-form button:active {
+.button:active {
     background: #D2A9F8;
 }
-form input:focus, button:focus {
+form input:focus, .button:focus {
     outline: none;
 }
 #messages {
@@ -62,8 +62,11 @@ form input:focus, button:focus {
 }
 #messages li {
     margin: 10px 40px;
-    padding: 10px;
+    overflow: auto;
+}
+.message-bubble {
     width: 300px;
+    padding: 10px;
     background: #9068be;
     color: white;
     font-size: 1em;
@@ -76,7 +79,13 @@ form input:focus, button:focus {
     font-size: .8em;
     color: #D2A9F8;
 }
-
 .message-time {
-  float: right;
+    float: right;
+}
+.my-message {
+    float: right;
+    background: #6ed3cf;
+}
+.my-message .message-user, .my-message .message-time {
+    color: #DAF4F0;
 }
