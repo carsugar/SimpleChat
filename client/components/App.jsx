@@ -90,12 +90,16 @@ class App extends React.Component {
           </div>
           <ul id="messages">
           </ul>
-          <form onSubmit={this.enterChatroom}>
+          <div id="welcome-text">
+            <div>Welcome to SimpleChat!</div>
+            <div>Choose a username to get started.</div>
+          </div>
+          <form id="username-form" onSubmit={this.enterChatroom}>
             <input autoComplete="off"
-                   placeholder="Choose a username"
+                   placeholder="Username"
                    value={this.state.username}
                    onChange={this.onUsernameInput} />
-            <button className="button">Go Chat</button>
+            <button className="button">Go Chat!</button>
           </form>
         </div>
       );
@@ -109,8 +113,8 @@ class App extends React.Component {
         <ul id="messages">
           {this.renderMessageList()}
         </ul>
-        <form onSubmit={this.sendMessage}>
-          <input autoComplete="off"
+        <form id="message-form" onSubmit={this.sendMessage}>
+          <input id="message-input" autoComplete="off"
             placeholder="Type a message..."
             value={this.state.message.text}
             onChange={this.onMessageInput} />
