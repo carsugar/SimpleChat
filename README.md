@@ -1,6 +1,9 @@
 Simple chat app using React and Socket.io
 
-To use:
-* clone repo
-* npm install
-* npm start
+[Check it out here!](http://carlingsimplechat.herokuapp.com)
+
+To use locally:
+* Clone the repository
+* Run npm install
+* Run npm start
+* Open localhost:3000
